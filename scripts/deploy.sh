@@ -2,6 +2,7 @@ export INTEGRATION_DEPLOYMENT_NAME=copy-leads-to-campaign
 export NEW_INTEGRATION_DEPLOYMENT_FILE=${TRAVIS_BUILD_DIR}/newDeployment.json
 export NEW_INTEGRATION_DEPLOYMENT_FILE=${TRAVIS_BUILD_DIR}/newDeployment.json
 pwd
+echo $TRAVIS_BUILD_DIR
 ls -lRt
 curl -X PUT  \
    "https://firefly-api-prod.appconnect.ibmcloud.com/${APP_CONNECT_INSTANCE_ID}/api/v1/integration-deployments/${INTEGRATION_DEPLOYMENT_NAME}" \
