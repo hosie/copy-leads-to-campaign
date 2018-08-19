@@ -1,12 +1,12 @@
 set -x
 export INTEGRATION_DEPLOYMENT_NAME=copy-leads-to-campaign
 export NEW_INTEGRATION_DEPLOYMENT_FILE=${TRAVIS_BUILD_DIR}/newDeployment.json
-export NEW_INTEGRATION_DEPLOYMENT_FILE=${TRAVIS_BUILD_DIR}/newDeployment.json
 pwd
 echo $TRAVIS_BUILD_DIR
-export APP_CONNECT_INSTANCE_ID=b0dddni0f
-ls -lRt
-which curl
+
+npm install
+eval `node ./scripts/appc-login.js`
+
 curl -X PUT  \
    "https://firefly-api-prod.appconnect.ibmcloud.com/${APP_CONNECT_INSTANCE_ID}/api/v1/integration-deployments/${INTEGRATION_DEPLOYMENT_NAME}" \
    --header "Content-Type: application/json"      \

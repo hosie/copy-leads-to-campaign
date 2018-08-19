@@ -1,0 +1,22 @@
+{
+  "name": "copy-leads-to-campaign",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hosie/copy-leads-to-campaign.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hosie/copy-leads-to-campaign/issues"
+  },
+  "homepage": "https://github.com/hosie/copy-leads-to-campaign#readme",
+  "dependencies": {
+    "request-promise": "^4.2.2"
+  }
+}
