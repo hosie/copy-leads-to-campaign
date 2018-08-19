@@ -1,12 +1,12 @@
 const rp = require('request-promise')
 var credentialsObject = 'grant_type=password&password=enamI_dei...9YpB3E0a&username=apiKey';
 
-if (!(process.env.IBM_CLOUD_API_KEY.length > 0)) {
+if (!(process.env.IBM_CLOUD_API_KEY) || !(process.env.IBM_CLOUD_API_KEY.length > 0)) {
   console.error("IBM_CLOUD_API_KEY not set")
   process.exit(1)
 }
 
-if (!(process.env.APP_CONNECT_INSTANCE_ID.length > 0)) {
+if (!(process.env.IBM_CLOUD_API_KEY) || !(process.env.APP_CONNECT_INSTANCE_ID.length > 0)) {
   console.error("APP_CONNECT_INSTANCE_ID not set")
   process.exit(1)
 }
