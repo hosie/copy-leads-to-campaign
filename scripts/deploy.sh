@@ -5,7 +5,7 @@ pwd
 echo $TRAVIS_BUILD_DIR
 
 npm install
-eval `node ./scripts/appc-login.js` || exit
+eval `node ./scripts/appc-login.js` || exit 1
 
 curl -X PUT  \
    "https://firefly-api-prod.appconnect.ibmcloud.com/${APP_CONNECT_INSTANCE_ID}/api/v1/integration-deployments/${INTEGRATION_DEPLOYMENT_NAME}" \
