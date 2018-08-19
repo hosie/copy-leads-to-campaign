@@ -1,4 +1,4 @@
-echo on
+set -x
 export INTEGRATION_DEPLOYMENT_NAME=copy-leads-to-campaign
 export NEW_INTEGRATION_DEPLOYMENT_FILE=${TRAVIS_BUILD_DIR}/newDeployment.json
 export NEW_INTEGRATION_DEPLOYMENT_FILE=${TRAVIS_BUILD_DIR}/newDeployment.json
