@@ -1,6 +1,6 @@
 set -x
-export INTEGRATION_DEPLOYMENT_NAME=copy-leads-to-campaign
-export NEW_INTEGRATION_DEPLOYMENT_FILE=${TRAVIS_BUILD_DIR}/newDeployment.json
+
+. ${TRAVIS_BUILD_DIR}/scripts/common.sh
 pwd
 echo $TRAVIS_BUILD_DIR
 
