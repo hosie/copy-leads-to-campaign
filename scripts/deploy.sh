@@ -1,7 +1,7 @@
 set -x
 
 . ${TRAVIS_BUILD_DIR}/scripts/common.sh
-export INTEGRATION_DEPLOYMENT_NAME=${FLOW_NAME}
+
 pwd
 echo $TRAVIS_BUILD_DIR
 
