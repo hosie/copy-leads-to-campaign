@@ -51,7 +51,7 @@ integration:
       connector-type: watsonnlclassifier
       actions:
         CLASSIFYTEXT: {}
-      account-name: Account 3
+      account-name: Account 1
   assemblies:
     assembly-1:
       assembly:
@@ -147,5 +147,5 @@ integration:
                     $ref: >-
                       #/block/Batch process/node-output/Salesforce Create
                       lead/response/payload
-  name: Populate a Salesforce campaign with leads captured in IBM Db2
+  name: Copy Leads to Campaign
 models: {}
