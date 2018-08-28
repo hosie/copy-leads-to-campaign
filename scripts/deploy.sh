@@ -8,7 +8,7 @@ echo $TRAVIS_BUILD_DIR
 npm install
 
 # We start to see the JWT so lets hide it
-#set +x
+set +x
 eval `node ./scripts/appc-login.js` || exit 1
 
 curl --silent --show-error --fail -X PUT  \
