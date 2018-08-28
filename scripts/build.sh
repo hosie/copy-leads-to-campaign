@@ -1,7 +1,7 @@
 set -x
 
 . ${TRAVIS_BUILD_DIR}/scripts/common.sh
-export INTEGRATION_YAML_FILE="${TRAVIS_BUILD_DIR}/Copy Leads to Campaign.yaml"
+export INTEGRATION_YAML_FILE="${TRAVIS_BUILD_DIR}/${FLOW_NAME}.yaml"
 pwd
 echo $TRAVIS_BUILD_DIR
 
