@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/hosie/copy-leads-to-campaign#readme",
   "dependencies": {
+    "js-yaml": "^3.12.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "yamljs": "^0.3.0"
+    "request-promise": "^4.2.2"    
   }
 }

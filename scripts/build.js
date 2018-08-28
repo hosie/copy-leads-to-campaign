@@ -1,5 +1,6 @@
 const fs = require('fs')
-var YAML = require('yamljs')
+var YAML = require('js-yaml')
+
 
 var inputFileName = process.argv[2]
 var integrationName = process.argv[3]
@@ -22,7 +23,7 @@ if(outputFileName) {
 }
 
 var integrationYaml = fs.readFileSync(inputFileName,{encoding:'utf8'})
-var integrationObj = YAML.parse(integrationYaml)
+var integrationObj = YAML.load(integrationYaml)
 integrationObj.integration.name = integrationName
 var deploymentObj = {
   "integration_document": integrationObj
