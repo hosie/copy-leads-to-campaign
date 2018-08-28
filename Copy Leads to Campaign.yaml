@@ -23,12 +23,6 @@ integration:
             $ref: '#/integration/assemblies/assembly-2'
       connector-type: ibmdb2
       account-name: Account 1
-    trigger-interface-3:
-      type: batch-completion-trigger
-      triggers:
-        COMPLETE:
-          assembly:
-            $ref: '#/integration/assemblies/assembly-3'
   action-interfaces:
     action-interface-1:
       type: batch-action
@@ -37,22 +31,13 @@ integration:
       options:
         extract:
           $ref: '#/integration/trigger-interfaces/trigger-interface-2'
-        completion:
-          $ref: '#/integration/trigger-interfaces/trigger-interface-3'
-    action-interface-2:
+    action-interface-3:
       type: api-action
       business-object: Lead
       connector-type: salesforce
       account-name: Account 1
       actions:
         CREATE: {}
-    action-interface-3:
-      type: api-action
-      business-object: ClassifyText
-      connector-type: watsonnlclassifier
-      account-name: Account 1
-      actions:
-        CLASSIFYTEXT: {}
     action-interface-4:
       type: api-action
       business-object: CampaignMember
@@ -60,25 +45,20 @@ integration:
       account-name: Account 1
       actions:
         CREATE: {}
-    action-interface-5:
+    action-interface-2:
       type: api-action
-      business-object: Campaign
-      connector-type: salesforce
-      account-name: Account 1
+      business-object: ClassifyText
+      connector-type: watsonnlclassifier
       actions:
-        UPSERTWITHWHERE: {}
+        CLASSIFYTEXT: {}
+      account-name: Account 3
   assemblies:
     assembly-1:
       assembly:
         execute:
           - batch-retrieve-action:
               name: Batch process
-              filter:
-                where:
-                  conference: '{{$Trigger.Conference__c}}'
-                input:
-                  - variable: Trigger
-                    $ref: '#/trigger/payload'
+              filter: {}
               pagination-type: SKIP_LIMIT
               target:
                 $ref: '#/integration/action-interfaces/action-interface-1'
@@ -88,12 +68,12 @@ integration:
           - custom-action:
               name: IBM Watson Natural Language Classifier Classify text
               target:
-                $ref: '#/integration/action-interfaces/action-interface-3'
+                $ref: '#/integration/action-interfaces/action-interface-2'
               action: CLASSIFYTEXT
               map:
                 mappings:
                   - classifier_id:
-                      template: 203402x550-nlc-574
+                      template: 8fc642x299-nlc-3559
                   - text:
                       template: '{{$Batchprocess.leadtxt}}'
                 $map: 'http://ibm.com/appconnect/map/v1'
@@ -105,7 +85,7 @@ integration:
           - create-action:
               name: Salesforce Create lead
               target:
-                $ref: '#/integration/action-interfaces/action-interface-2'
+                $ref: '#/integration/action-interfaces/action-interface-3'
               map:
                 mappings:
                   - City:
@@ -116,16 +96,12 @@ integration:
                       template: '{{$Batchprocess.country}}'
                   - Description:
                       template: >-
-                        {{$exists($Batchprocess.leadtxt)? $Batchprocess.leadtxt
-                        : 'Met at conference ' & $Batchprocess.conference }}
-                  - Email:
-                      template: '{{$Batchprocess.email}}'
+                        {{$exists($Batchprocess.leadtxt)?$Batchprocess.leadtxt
+                        :'met at conference'  }}
                   - FirstName:
                       template: '{{$Batchprocess.firstname}}'
                   - LastName:
-                      template: '{{$Batchprocess.lastname}}'
-                  - OwnerId:
-                      template: '{{$Trigger.OwnerId}}'
+                      template: '{{$uppercase($Batchprocess.lastname)}}'
                   - Phone:
                       template: '{{$Batchprocess.phone}}'
                   - PostalCode:
@@ -137,8 +113,8 @@ integration:
                       template: '{{$Batchprocess.region}}'
                   - Street:
                       template: >-
-                        {{$Batchprocess.address1}} {{$Batchprocess.address2}}
-                        {{$Batchprocess.address3}} {{$Batchprocess.address4}}
+                        {{$Batchprocess.address1}}, {{$Batchprocess.address2}},
+                        {{$Batchprocess.address3}}, {{$Batchprocess.address4}}
                 $map: 'http://ibm.com/appconnect/map/v1'
                 input:
                   - variable: Batchprocess
@@ -160,47 +136,16 @@ integration:
                   - LeadId:
                       template: '{{$SalesforceCreatelead.Id}}'
                   - Status:
-                      template: Planned
+                      template: Received
                 $map: 'http://ibm.com/appconnect/map/v1'
                 input:
                   - variable: Batchprocess
                     $ref: '#/block/Batch process/current-item'
                   - variable: Trigger
                     $ref: '#/trigger/payload'
-                  - variable: IBMWatsonNaturalLanguageClassifierClassifytext
-                    $ref: >-
-                      #/block/Batch process/node-output/IBM Watson Natural
-                      Language Classifier Classify text/response/payload
                   - variable: SalesforceCreatelead
                     $ref: >-
                       #/block/Batch process/node-output/Salesforce Create
                       lead/response/payload
-    assembly-3:
-      assembly:
-        execute:
-          - upsert-action:
-              name: Salesforce Update or create campaign
-              target:
-                $ref: '#/integration/action-interfaces/action-interface-5'
-              map:
-                mappings:
-                  - IsActive:
-                      expression: 'true'
-                  - Name:
-                      template: '{{$Trigger.Name}}'
-                $map: 'http://ibm.com/appconnect/map/v1'
-                input:
-                  - variable: Trigger
-                    $ref: '#/trigger/payload'
-                  - variable: Batchprocess
-                    $ref: '#/node-output/Batch process/response/payload'
-              filter:
-                where:
-                  Id: '{{$Trigger.Id}}'
-                input:
-                  - variable: Trigger
-                    $ref: '#/trigger/payload'
-                  - variable: Batchprocess
-                    $ref: '#/node-output/Batch process/response/payload'
-  name: Copy Leads to Campaign
+  name: Populate a Salesforce campaign with leads captured in IBM Db2
 models: {}
