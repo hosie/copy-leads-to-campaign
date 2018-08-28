@@ -147,5 +147,5 @@ integration:
                     $ref: >-
                       #/block/Batch process/node-output/Salesforce Create
                       lead/response/payload
-  name: Populate a Salesforce campaign with leads captured in IBM Db2
+  name: Copy Leads to Campaign
 models: {}
