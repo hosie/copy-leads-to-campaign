@@ -51,7 +51,7 @@ integration:
       connector-type: watsonnlclassifier
       actions:
         CLASSIFYTEXT: {}
-      account-name: Account 3
+      account-name: Account 1
   assemblies:
     assembly-1:
       assembly:
