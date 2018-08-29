@@ -10,7 +10,7 @@ if (!(process.env.APP_CONNECT_INSTANCE_ID) || !(process.env.APP_CONNECT_INSTANCE
   process.exit(1)
 }
 
-rp.post(`https://firefly-api-prod.appconnect.ibmcloud.com/${process.env.APP_CONNECT_INSTANCE_ID}/tokens`,{
+rp.post(`https://firefly-api-produk.eu-gb.appconnect.ibm.com/${process.env.APP_CONNECT_INSTANCE_ID}/tokens`,{
   json:true,
   headers: {
      "Content-Type": "application/x-www-form-urlencoded"
