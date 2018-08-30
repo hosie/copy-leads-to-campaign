@@ -10,7 +10,12 @@ if (!(process.env.APP_CONNECT_INSTANCE_ID) || !(process.env.APP_CONNECT_INSTANCE
   process.exit(1)
 }
 
-rp.post(`https://firefly-api-produk.eu-gb.appconnect.ibm.com/${process.env.APP_CONNECT_INSTANCE_ID}/tokens`,{
+if (!(process.env.APP_CONNECT_ROUTE) || !(process.env.APP_CONNECT_ROUTE.length > 0)) {
+  console.error("APP_CONNECT_ROUTE not set")
+  process.exit(1)
+}
+
+rp.post(`${process.env.APP_CONNECT_ROUTE}/${process.env.APP_CONNECT_INSTANCE_ID}/tokens`,{
   json:true,
   headers: {
      "Content-Type": "application/x-www-form-urlencoded"
