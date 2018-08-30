@@ -45,6 +45,13 @@ integration:
       account-name: Account 1
       actions:
         CREATE: {}
+    action-interface-2:
+      type: api-action
+      business-object: ClassifyText
+      connector-type: watsonnlclassifier
+      account-name: Account 1
+      actions:
+        CLASSIFYTEXT: {}
   assemblies:
     assembly-1:
       assembly:
@@ -58,6 +65,23 @@ integration:
     assembly-2:
       assembly:
         execute:
+          - custom-action:
+              name: IBM Watson Natural Language Classifier Classify text
+              target:
+                $ref: '#/integration/action-interfaces/action-interface-2'
+              action: CLASSIFYTEXT
+              map:
+                mappings:
+                  - classifier_id:
+                      template: 8fc642x299-nlc-3559
+                  - text:
+                      template: '{{$Batchprocess.leadtxt}}'
+                $map: 'http://ibm.com/appconnect/map/v1'
+                input:
+                  - variable: Batchprocess
+                    $ref: '#/block/Batch process/current-item'
+                  - variable: Trigger
+                    $ref: '#/trigger/payload'
           - create-action:
               name: Salesforce Create lead
               target:
@@ -82,6 +106,9 @@ integration:
                       template: '{{$Batchprocess.phone}}'
                   - PostalCode:
                       template: '{{$Batchprocess.postalcd}}'
+                  - Rating:
+                      template: >-
+                        {{$IBMWatsonNaturalLanguageClassifierClassifytext.top_class}}
                   - State:
                       template: '{{$Batchprocess.region}}'
                   - Street:
@@ -94,6 +121,10 @@ integration:
                     $ref: '#/block/Batch process/current-item'
                   - variable: Trigger
                     $ref: '#/trigger/payload'
+                  - variable: IBMWatsonNaturalLanguageClassifierClassifytext
+                    $ref: >-
+                      #/block/Batch process/node-output/IBM Watson Natural
+                      Language Classifier Classify text/response/payload
           - create-action:
               name: Salesforce Create campaign member
               target:
