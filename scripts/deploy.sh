@@ -10,7 +10,7 @@ npm install
 # We start to see the JWT so lets hide it
 set +x
 eval `node ./scripts/appc-login.js` || exit 1
-echo "putting to "${APP_CONNECT_ROUTE}/${APP_CONNECT_INSTANCE_ID}/api/v1/integration-deployments/${INTEGRATION_DEPLOYMENT_NAME}"
+echo "putting to ${APP_CONNECT_ROUTE}/${APP_CONNECT_INSTANCE_ID}/api/v1/integration-deployments/${INTEGRATION_DEPLOYMENT_NAME}"
 curl --silent --show-error --fail -X PUT  \
    "${APP_CONNECT_ROUTE}/${APP_CONNECT_INSTANCE_ID}/api/v1/integration-deployments/${INTEGRATION_DEPLOYMENT_NAME}" \
    --header "Content-Type: application/json"      \
