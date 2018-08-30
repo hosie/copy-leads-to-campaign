@@ -97,9 +97,9 @@ integration:
                   - Description:
                       template: >-
                         {{$exists($Batchprocess.leadtxt)?$Batchprocess.leadtxt
-                        :'met at conference' }}
+                        :'met at conference'  }}
                   - FirstName:
-                      template: '{{$Batchprocess.firstname}}'
+                      template: '{{$uppercase($Batchprocess.firstname)}}'
                   - LastName:
                       template: '{{$Batchprocess.lastname}}'
                   - Phone:
