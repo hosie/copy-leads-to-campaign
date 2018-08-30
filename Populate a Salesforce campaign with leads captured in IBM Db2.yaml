@@ -78,9 +78,7 @@ integration:
                   - Description:
                       template: >-
                         {{$exists($Batchprocess.leadtxt)?$Batchprocess.leadtxt
-                        :'met at conference' &   $Trigger.Conference__c }}
-                  - Email:
-                      template: '{{$Batchprocess.email}}'
+                        :'met at conference' }}
                   - FirstName:
                       template: '{{$Batchprocess.firstname}}'
                   - LastName:
