@@ -51,12 +51,7 @@ integration:
         execute:
           - batch-retrieve-action:
               name: Batch process
-              filter:
-                where:
-                  conference: '{{$Trigger.Conference__c}}'
-                input:
-                  - variable: Trigger
-                    $ref: '#/trigger/payload'
+              filter: {}
               pagination-type: SKIP_LIMIT
               target:
                 $ref: '#/integration/action-interfaces/action-interface-1'
